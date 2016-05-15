@@ -8,13 +8,10 @@
 package org.eclipse.xtend.web
 
 import java.net.InetSocketAddress
-import org.eclipse.jetty.annotations.AnnotationConfiguration
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.util.log.Slf4jLog
-import org.eclipse.jetty.webapp.MetaInfConfiguration
 import org.eclipse.jetty.webapp.WebAppContext
 import org.eclipse.jetty.webapp.WebInfConfiguration
-import org.eclipse.jetty.webapp.WebXmlConfiguration
 
 /**
  * This program starts an HTTP server for testing the web integration of your DSL.
@@ -27,13 +24,15 @@ class ServerLauncher {
 			resourceBase = 'src/main/webapp'
 			welcomeFiles = #["index.html"]
 			contextPath = "/"
-			configurations = #[
-				new AnnotationConfiguration,
-				new WebXmlConfiguration,
-				new WebInfConfiguration,
-				new MetaInfConfiguration
-			]
-			setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, '.*/org\\.eclipse\\.xtend\\.web/.*,.*/org\\.eclipse\\.xtext\\.web.*,.*/org\\.webjars.*')
+//			configurations = #[
+//				new AnnotationConfiguration,
+//				new WebXmlConfiguration,
+//				new WebInfConfiguration,
+//				new MetaInfConfiguration
+//			]
+			addServlet(XtendServlet, XtendServlet.URL_PATTERNS)
+			setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, // '.*/org\\.eclipse\\.xtend\\.web/.*,' + 
+			     '.*/org\\.eclipse\\.xtext\\.web.*,.*/org\\.webjars.*')
 		]
 		val log = new Slf4jLog(ServerLauncher.name)
 		try {

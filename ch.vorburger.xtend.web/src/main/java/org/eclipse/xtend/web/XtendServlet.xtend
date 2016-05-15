@@ -21,15 +21,17 @@ import org.eclipse.xtext.web.servlet.XtextServlet
 /**
  * Deploy this class into a servlet container to enable DSL-specific services.
  */
-@WebServlet(name = 'XtextServices', urlPatterns = '/xtext-service/*')
+@WebServlet(name = 'XtextServices', urlPatterns = XtendServlet.URL_PATTERNS)
 class XtendServlet extends XtextServlet {
 	
-	val List<ExecutorService> executorServices = newArrayList
+	static public val URL_PATTERNS = '/xtext-service/*'
+	
+	val List<ExecutorService> executorServices = newArrayList    
 	
 	override init() {
 		super.init()
 		val Provider<ExecutorService> executorServiceProvider = [Executors.newCachedThreadPool => [executorServices += it]]
-		val injector = new XtendWebSetup(executorServiceProvider).createInjectorAndDoEMFRegistration()
+		/* val injector =*/ new XtendWebSetup(executorServiceProvider).createInjectorAndDoEMFRegistration()
 		// injector.getInstance(ExamplesLibrary).writeExamplesToFiles
 	}
 	

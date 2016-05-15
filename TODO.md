@@ -1,5 +1,3 @@
-- [ ] make it work again, why broken? Better error next time..
-
 - [ ] reformat all sources? what convention does Xtext use - tabs or spaces, how many?  Set up Xtext Oomph workspace...
 
 - [ ] CLI build must work.. see https://bugs.eclipse.org/bugs/show_bug.cgi?id=491400: ../../gradlew build => NOK :(
