@@ -7,28 +7,27 @@ import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
 import java.nio.file.Path
+import java.util.ArrayList
 import java.util.List
 import org.apache.commons.io.FileUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.web.server.IServiceContext
 import org.eclipse.xtext.web.server.model.IWebResourceSetProvider
-import java.util.ArrayList
-import org.eclipse.xtext.resource.XtextResourceSet
 
 @FinalFieldsConstructor
 class WebDevEnvResourceSetProvider implements IWebResourceSetProvider {
-    
+
     // NOTE Xtext already seems to cache, as we can see that IWebResourceSetProvider.get is called only once, and not for each request.
     // So a Cache in the HTTP session (via serviceContext.session) does not appear to be needed.  If it was, see commented out code. 
     // val static SESSION_CACHE_KEY = WebDevEnvResourceSetProvider.name  
-    
     val Project project
-    
+
     @Inject Provider<ResourceSet> newResourceSetProvider;
     var ResourceSet resourceSet; // TODO later expiring Cache Map with several RS, to provide multi project support
-    
+
     override get(String resourceId, IServiceContext serviceContext) {
         if (resourceSet == null) {
 //            serviceContext.session.get(SESSION_CACHE_KEY, [
@@ -41,12 +40,12 @@ class WebDevEnvResourceSetProvider implements IWebResourceSetProvider {
         }
         resourceSet
     }
-    
+
     protected def loadAllXtendFiles(Project project, ResourceSet resourceSet) {
         val xtendFiles = FileUtils.listFiles(project.sourceDirectory, Project.xtendExtensions, true)
         for (xtendFile : xtendFiles) {
-        	val uri = URI.createFileURI(xtendFile.absolutePath) // URI.createURI(xtendFile.toURI().toString())
-        	resourceSet.getResource(uri, true)
+            val uri = URI.createFileURI(xtendFile.absolutePath) // URI.createURI(xtendFile.toURI().toString())
+            resourceSet.getResource(uri, true)
         }
     }
 
@@ -58,7 +57,7 @@ class WebDevEnvResourceSetProvider implements IWebResourceSetProvider {
         new URLClassLoader(urls, parentClassLoader)
     }
 
-    //  Code to convert list of Path to URL copy/pasted from HotClassLoaderImpl
+    // Code to convert list of Path to URL copy/pasted from HotClassLoaderImpl
     protected def URL[] getURLs(List<Path> paths) {
         val urls = new ArrayList<URL>(paths.size())
         for (var int i = 0; i < paths.size(); i++) {
@@ -66,5 +65,5 @@ class WebDevEnvResourceSetProvider implements IWebResourceSetProvider {
         }
         return urls
     }
-    
+
 }

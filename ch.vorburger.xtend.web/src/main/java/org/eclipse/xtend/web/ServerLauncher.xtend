@@ -18,39 +18,40 @@ import org.eclipse.jetty.webapp.WebInfConfiguration
  * Just execute it and point a web browser to http://localhost:8080/
  */
 class ServerLauncher {
-	def static void main(String[] args) {
-		val server = new Server(new InetSocketAddress('localhost', 8080))
-		server.handler = new WebAppContext => [
-			resourceBase = 'src/main/webapp'
-			welcomeFiles = #["index.html"]
-			contextPath = "/"
+    def static void main(String[] args) {
+        val server = new Server(new InetSocketAddress('localhost', 8080))
+        server.handler = new WebAppContext => [
+            resourceBase = 'src/main/webapp'
+            welcomeFiles = #["index.html"]
+            contextPath = "/"
 //			configurations = #[
 //				new AnnotationConfiguration,
 //				new WebXmlConfiguration,
 //				new WebInfConfiguration,
 //				new MetaInfConfiguration
 //			]
-			addServlet(XtendServlet, XtendServlet.URL_PATTERNS)
-			setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, // '.*/org\\.eclipse\\.xtend\\.web/.*,' + 
-			     '.*/org\\.eclipse\\.xtext\\.web.*,.*/org\\.webjars.*')
-		]
-		val log = new Slf4jLog(ServerLauncher.name)
-		try {
-			server.start
-			log.info('Server started ' + server.getURI + '...')
-			new Thread[
-				log.info('Press enter to stop the server...')
-				val key = System.in.read
-				if (key !== -1) {
-					server.stop
-				} else {
-					log.warn('Console input is not available. In order to stop the server, you need to cancel process manually.')
-				}
-			].start
-			server.join
-		} catch (Exception exception) {
-			log.warn(exception.message)
-			System.exit(1)
-		}
-	}
+            addServlet(XtendServlet, XtendServlet.URL_PATTERNS)
+            setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, // '.*/org\\.eclipse\\.xtend\\.web/.*,' + 
+            '.*/org\\.eclipse\\.xtext\\.web.*,.*/org\\.webjars.*')
+        ]
+        val log = new Slf4jLog(ServerLauncher.name)
+        try {
+            server.start
+            log.info('Server started ' + server.getURI + '...')
+            new Thread [
+                log.info('Press enter to stop the server...')
+                val key = System.in.read
+                if (key !== -1) {
+                    server.stop
+                } else {
+                    log.warn(
+                        'Console input is not available. In order to stop the server, you need to cancel process manually.')
+                }
+            ].start
+            server.join
+        } catch (Exception exception) {
+            log.warn(exception.message)
+            System.exit(1)
+        }
+    }
 }

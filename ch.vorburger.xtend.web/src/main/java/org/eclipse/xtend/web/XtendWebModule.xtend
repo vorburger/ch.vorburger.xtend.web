@@ -25,49 +25,49 @@ import org.eclipse.xtext.linking.ILinker
 import org.eclipse.xtext.parser.antlr.LexerProvider
 import org.eclipse.xtext.web.server.XtextServiceDispatcher
 import org.eclipse.xtext.web.server.occurrences.OccurrencesService
-import org.eclipse.xtext.web.server.persistence.IServerResourceHandler
 import org.eclipse.xtext.web.server.persistence.FileResourceHandler
+import org.eclipse.xtext.web.server.persistence.IServerResourceHandler
 
 /**
  * Use this class to register additional components to be used within the web application.
  */
 @FinalFieldsConstructor class XtendWebModule extends AbstractXtendWebModule {
 
-	override Class<? extends IContentAssistParser> bindIContentAssistParser() {
-		return FlexerBasedContentAssistParser
-	}
+    override Class<? extends IContentAssistParser> bindIContentAssistParser() {
+        return FlexerBasedContentAssistParser
+    }
 
-	def void configureContentAssistLexerProvider(Binder binder) {
-		binder.bind(InternalXtendLexer).toProvider(LexerProvider.create(DisabledInternalLexer))
-		binder.bind(DisabledInternalLexer).toProvider(LexerProvider.create(DisabledInternalLexer))
-	}
+    def void configureContentAssistLexerProvider(Binder binder) {
+        binder.bind(InternalXtendLexer).toProvider(LexerProvider.create(DisabledInternalLexer))
+        binder.bind(DisabledInternalLexer).toProvider(LexerProvider.create(DisabledInternalLexer))
+    }
 
-	override void configureContentAssistLexer(Binder binder) {
-		binder.bind(Lexer).annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST)).to(DisabledInternalLexer)
-	}
+    override void configureContentAssistLexer(Binder binder) {
+        binder.bind(Lexer).annotatedWith(Names.named(LexerIdeBindings.CONTENT_ASSIST)).to(DisabledInternalLexer)
+    }
 
-	def Class<? extends ILinker> bindILinker() {
-		return Linker
-	}
+    def Class<? extends ILinker> bindILinker() {
+        return Linker
+    }
 
-	def Class<? extends ContentAssistContextFactory> bindContentAssistContextFactory() {
-		return FlexerBasedContentAssistContextFactory
-	}
+    def Class<? extends ContentAssistContextFactory> bindContentAssistContextFactory() {
+        return FlexerBasedContentAssistContextFactory
+    }
 
-	def Class<? extends IServerResourceHandler> bindIServerResourceHandler() {
-		return FileResourceHandler
-	}
-	
-	def Class<? extends OccurrencesService> bindOccurencesService() {
-		return XtendOccurrencesService
-	}
-	
-	def Class<? extends XtextServiceDispatcher> bindXtextServiceDispatcher() {
-		return XtendServiceDispatcher
-	}
+    def Class<? extends IServerResourceHandler> bindIServerResourceHandler() {
+        return FileResourceHandler
+    }
 
-	override Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
-		return XtendHighlightingCalculator
-	}
-	
+    def Class<? extends OccurrencesService> bindOccurencesService() {
+        return XtendOccurrencesService
+    }
+
+    def Class<? extends XtextServiceDispatcher> bindXtextServiceDispatcher() {
+        return XtendServiceDispatcher
+    }
+
+    override Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
+        return XtendHighlightingCalculator
+    }
+
 }

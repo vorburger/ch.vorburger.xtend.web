@@ -21,29 +21,31 @@ import org.eclipse.xtext.web.servlet.XtextServlet
 /**
  * Deploy this class into a servlet container to enable DSL-specific services.
  */
-@WebServlet(name = 'XtextServices', urlPatterns = XtendServlet.URL_PATTERNS)
+@WebServlet(name='XtextServices', urlPatterns=XtendServlet.URL_PATTERNS)
 class XtendServlet extends XtextServlet {
-	
-	static public val URL_PATTERNS = '/xtext-service/*'
-	
-	val List<ExecutorService> executorServices = newArrayList    
-	
-	override init() {
-		super.init()
-		val Provider<ExecutorService> executorServiceProvider = [Executors.newCachedThreadPool => [executorServices += it]]
-		/* val injector =*/ new XtendWebSetup(executorServiceProvider).createInjectorAndDoEMFRegistration()
-		// injector.getInstance(ExamplesLibrary).writeExamplesToFiles
-	}
-	
-	override destroy() {
-		executorServices.forEach[shutdown()]
-		executorServices.clear()
-		super.destroy()
-	}
-	
-	override protected doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		val service = getService(req)
-		doService(service, resp)
-	}
-	
+
+    static public val URL_PATTERNS = '/xtext-service/*'
+
+    val List<ExecutorService> executorServices = newArrayList
+
+    override init() {
+        super.init()
+        val Provider<ExecutorService> executorServiceProvider = [
+            Executors.newCachedThreadPool => [executorServices += it]
+        ]
+        /* val injector =*/ new XtendWebSetup(executorServiceProvider).createInjectorAndDoEMFRegistration()
+    // injector.getInstance(ExamplesLibrary).writeExamplesToFiles
+    }
+
+    override destroy() {
+        executorServices.forEach[shutdown()]
+        executorServices.clear()
+        super.destroy()
+    }
+
+    override protected doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        val service = getService(req)
+        doService(service, resp)
+    }
+
 }

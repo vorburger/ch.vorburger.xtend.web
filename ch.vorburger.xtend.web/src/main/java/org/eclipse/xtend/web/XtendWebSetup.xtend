@@ -16,27 +16,25 @@ import org.eclipse.xtend.core.XtendRuntimeModule
 import org.eclipse.xtend.core.XtendStandaloneSetup
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.eclipse.xtend.web.devenv.WebDevEnvModule
-import org.eclipse.xtend.web.devenv.Project
-import java.io.File
 
 /**
  * Initialization support for running Xtext languages in web applications.
  */
 @FinalFieldsConstructor class XtendWebSetup extends XtendStandaloneSetup {
-	
-	val Provider<ExecutorService> executorServiceProvider;
-	
-	override Injector createInjector() {
-		val runtimeModule = new XtendRuntimeModule()
-		val webModule = new XtendWebModule(executorServiceProvider)
-     val webDevEnvModule = webDevEnvModule()
-		return Guice.createInjector(Modules.combine(Modules.override(runtimeModule).with(webModule)), webDevEnvModule)
-	}
 
-	def protected webDevEnvModule() {
-	   // val p = new Project(new File("/home/vorburger/dev/Minecraft/SwissKnightMinecraft/SpongePowered/MyFirstSpongePlugIn"), "src/main/java", "ch/vorburger/minecraft/michaelpapa7")
-	   val p = ExamplesLibrary.exampleProject
-      new WebDevEnvModule(p)
-	}
+    val Provider<ExecutorService> executorServiceProvider;
+
+    override Injector createInjector() {
+        val runtimeModule = new XtendRuntimeModule()
+        val webModule = new XtendWebModule(executorServiceProvider)
+        val webDevEnvModule = webDevEnvModule()
+        return Guice.createInjector(Modules.combine(Modules.override(runtimeModule).with(webModule)), webDevEnvModule)
+    }
+
+    def protected webDevEnvModule() {
+        // val p = new Project(new File("/home/vorburger/dev/Minecraft/SwissKnightMinecraft/SpongePowered/MyFirstSpongePlugIn"), "src/main/java", "ch/vorburger/minecraft/michaelpapa7")
+        val p = ExamplesLibrary.exampleProject
+        new WebDevEnvModule(p)
+    }
 
 }

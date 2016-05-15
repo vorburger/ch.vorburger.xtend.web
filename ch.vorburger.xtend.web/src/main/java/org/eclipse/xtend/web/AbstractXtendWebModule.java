@@ -7,16 +7,18 @@
  *******************************************************************************/
 package org.eclipse.xtend.web;
 
-import com.google.inject.Binder;
-import com.google.inject.Provider;
-import com.google.inject.name.Names;
 import java.util.concurrent.ExecutorService;
+
 import org.eclipse.xtend.ide.common.contentassist.antlr.XtendParser;
 import org.eclipse.xtend.ide.common.contentassist.antlr.internal.InternalXtendLexer;
 import org.eclipse.xtext.ide.LexerIdeBindings;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.IContentAssistParser;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.internal.Lexer;
 import org.eclipse.xtext.xbase.web.DefaultXbaseWebModule;
+
+import com.google.inject.Binder;
+import com.google.inject.Provider;
+import com.google.inject.name.Names;
 
 /**
  * Manual modifications go to {@link XtendWebModule}.
