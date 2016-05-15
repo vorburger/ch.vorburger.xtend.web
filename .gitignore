@@ -1,0 +1,12 @@
+.project
+.classpath
+.settings/
+
+.gradle/
+target/
+build/
+bin/
+
+xtend-gen/
+
+node_modules/
