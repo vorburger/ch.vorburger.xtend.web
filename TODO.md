@@ -1,3 +1,4 @@
+- [ ] make it work again, why broken? Better error next time..
 
 - [ ] reformat all sources? what convention does Xtext use - tabs or spaces, how many?  Set up Xtext Oomph workspace...
 
@@ -5,10 +6,11 @@
 
 - [ ] HOST it somewhere
 
-
+- [ ] src/main/webapp/index.html gen. from src/main/java/**/*.xtend (statically, build; not run-time, for CDN..)
 - [ ] separate project xtend.web.lib VS xtend.web.demo (allows me to CUSTOMIZE the UI, yet share some (JS) code) 
 - [ ] XtendWebSetup Project location configuration more flexible
 - [ ] remove ExamplesLibrary, make file save optional so that demo.examples never get overridden
+- [ ] work without hard-coded HelloWorld.xtend
 
 - [ ] separate project xtend.web.generator: Set up more configurable allow another project to use this without XtendServiceDispatcher and code generation shown in UI
 
