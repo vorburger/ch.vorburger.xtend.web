@@ -1,12 +1,12 @@
-package org.eclipse.xtend.web
+package ch.vorburger.xtend.web
 
+import ch.vorburger.xtend.web.devenv.Project
+import ch.vorburger.xtend.web.devenv.WebDevEnvModule
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import com.google.inject.Guice
 import com.google.inject.Inject
 import java.io.File
-import org.eclipse.xtend.web.devenv.Project
-import org.eclipse.xtend.web.devenv.WebDevEnvModule
 import org.eclipse.xtext.web.server.persistence.IResourceBaseProvider
 
 class ExamplesLibrary {

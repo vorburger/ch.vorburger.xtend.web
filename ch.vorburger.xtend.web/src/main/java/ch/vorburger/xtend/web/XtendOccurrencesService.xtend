@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web
+package ch.vorburger.xtend.web
 
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.web.server.occurrences.OccurrencesService

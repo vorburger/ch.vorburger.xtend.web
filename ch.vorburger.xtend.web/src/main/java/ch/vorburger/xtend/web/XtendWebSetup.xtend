@@ -5,8 +5,9 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.xtend.web
+package ch.vorburger.xtend.web
 
+import ch.vorburger.xtend.web.devenv.WebDevEnvModule
 import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Provider
@@ -15,7 +16,6 @@ import java.util.concurrent.ExecutorService
 import org.eclipse.xtend.core.XtendRuntimeModule
 import org.eclipse.xtend.core.XtendStandaloneSetup
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
-import org.eclipse.xtend.web.devenv.WebDevEnvModule
 
 /**
  * Initialization support for running Xtext languages in web applications.

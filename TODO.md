@@ -1,7 +1,5 @@
 
-- [ ] CLI build must work.. see https://bugs.eclipse.org/bugs/show_bug.cgi?id=491400: ../../gradlew build => NOK :(
-
-- [ ] HOST it somewhere
+- [ ] HOST it somewhere!
 
 - [ ] src/main/webapp/index.html gen. from src/main/java/**/*.xtend (statically, build; not run-time, for CDN..)
 - [ ] separate project xtend.web.lib VS xtend.web.demo (allows me to CUSTOMIZE the UI, yet share some (JS) code) 
@@ -24,7 +22,5 @@
 - [ ] dirty indicator?
 
 - [ ] multi project, and add all files from ExamplesLibrary
-
-- [ ] README.md instructions how to get it to build on CLI
 
 - [ ] XtendServiceDispatcher getJava2XtendService hasTextInput ?

@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web.devenv
+package ch.vorburger.xtend.web.devenv
 
 import org.eclipse.xtext.service.AbstractGenericModule
 import org.eclipse.xtext.web.server.model.IWebResourceSetProvider

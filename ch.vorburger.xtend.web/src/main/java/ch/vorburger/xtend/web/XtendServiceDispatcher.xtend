@@ -1,11 +1,11 @@
-package org.eclipse.xtend.web
+package ch.vorburger.xtend.web
 
 import com.google.common.collect.Lists
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import org.eclipse.xtend.web.devenv.IResourceBaseProvider2
-import org.eclipse.xtend.web.devenv.ListResourcesResult
-import org.eclipse.xtend.web.server.java2xtend.Java2XtendService
+import ch.vorburger.xtend.web.devenv.IResourceBaseProvider2
+import ch.vorburger.xtend.web.devenv.ListResourcesResult
+import ch.vorburger.xtend.web.server.java2xtend.Java2XtendService
 import org.eclipse.xtext.util.internal.Log
 import org.eclipse.xtext.web.server.IServiceContext
 import org.eclipse.xtext.web.server.InvalidRequestException

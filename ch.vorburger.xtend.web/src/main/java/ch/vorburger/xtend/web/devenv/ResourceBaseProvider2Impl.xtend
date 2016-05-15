@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web.devenv
+package ch.vorburger.xtend.web.devenv
 
 import java.io.File
 import java.io.IOException

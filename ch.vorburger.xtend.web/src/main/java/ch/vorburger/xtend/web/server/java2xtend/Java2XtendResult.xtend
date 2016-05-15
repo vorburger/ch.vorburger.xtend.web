@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web.server.java2xtend
+package ch.vorburger.xtend.web.server.java2xtend
 
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.web.server.IServiceResult

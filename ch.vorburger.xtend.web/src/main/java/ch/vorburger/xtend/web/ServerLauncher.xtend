@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.xtend.web
+package ch.vorburger.xtend.web
 
 import java.net.InetSocketAddress
 import org.eclipse.jetty.server.Server

@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web.devenv
+package ch.vorburger.xtend.web.devenv
 
 interface IResourceBaseProvider2 {
 

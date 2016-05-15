@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web.devenv
+package ch.vorburger.xtend.web.devenv
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Data

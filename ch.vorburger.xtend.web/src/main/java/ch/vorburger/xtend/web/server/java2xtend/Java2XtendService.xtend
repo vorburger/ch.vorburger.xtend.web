@@ -1,4 +1,4 @@
-package org.eclipse.xtend.web.server.java2xtend
+package ch.vorburger.xtend.web.server.java2xtend
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
