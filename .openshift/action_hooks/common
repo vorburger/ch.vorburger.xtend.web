@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e # exit on error
+set -x # echo on
+
+# Use "export" here even though this "common" script is source'd, so that commands such as gradle used in the script which source this also see the env var. 
+export JAVA_HOME=/etc/alternatives/java_sdk_1.8.0
+export PATH=$JAVA_HOME/bin:$PATH
+export GRADLE_USER_HOME=$OPENSHIFT_DATA_DIR/gradle
