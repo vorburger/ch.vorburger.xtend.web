@@ -30,6 +30,8 @@ dependencies {
 	compile 'com.github.vorburger.HoTea:hotea:-SNAPSHOT' // jitpack
 }
 
+compileJava.options.encoding = 'UTF-8'
+
 mainClassName = "ch.vorburger.xtend.web.ServerLauncher"
 
 run {

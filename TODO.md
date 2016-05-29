@@ -22,6 +22,8 @@
 
 - [ ] multi user
 
+- [ ] co-editing! simple F5 already works, thanks to AutoRefreshingResourcePersistenceService, real live GDoc like sync would be much cooler..
+
 - [ ] security
 
 - [ ] auto format
