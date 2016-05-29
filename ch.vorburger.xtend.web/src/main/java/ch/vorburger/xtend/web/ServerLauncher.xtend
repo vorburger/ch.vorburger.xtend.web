@@ -15,11 +15,13 @@ import org.eclipse.jetty.webapp.WebInfConfiguration
 
 /**
  * This program starts an HTTP server for testing the web integration of your DSL.
- * Just execute it and point a web browser to http://localhost:8080/
+ * Just execute it and point a web browser to http://localhost:8080/.
  */
 class ServerLauncher {
     def static void main(String[] args) {
-        val server = new Server(new InetSocketAddress('localhost', 8080))
+        val ip = if (args.size > 0) args.get(0) else 'localhost'
+        val port = if (args.size > 1) Integer.valueOf(args.get(1)) else 8080
+        val server = new Server(new InetSocketAddress(ip, port))
         server.handler = new WebAppContext => [
             resourceBase = 'src/main/webapp'
             welcomeFiles = #["index.html"]

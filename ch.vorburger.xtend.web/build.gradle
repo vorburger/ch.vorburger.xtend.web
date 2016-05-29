@@ -1,7 +1,6 @@
 plugins {
-   id 'eclipse'
-	id 'osgi'
-	id 'war'
+    id 'eclipse'
+	id 'application'
 	id 'org.xtext.xtend' version '1.0.4'
 }
 
@@ -20,8 +19,9 @@ dependencies {
 	compile "org.webjars:jquery:2.1.4"
 	compile "org.webjars:ace:1.2.0"
 	
-	providedCompile "org.eclipse.jetty:jetty-annotations:9.2.11.v20150529"
-	providedCompile "org.slf4j:slf4j-simple:1.7.12"
+	compile "org.eclipse.jetty:jetty-annotations:9.2.11.v20150529"
+	// TODO switch to using logback instead of slf4j-simple 
+	compile "org.slf4j:slf4j-simple:1.7.12"
 	
 	compile "commons-io:commons-io:2.4"
 	
@@ -29,17 +29,10 @@ dependencies {
 	compile 'ch.vorburger:hotea:1.0.0-SNAPSHOT'
 }
 
-task jettyRun(type:JavaExec) {
-	dependsOn(sourceSets.main.runtimeClasspath)
-	classpath = sourceSets.main.runtimeClasspath.filter{it.exists()}
-	main = 'org.eclipse.xtend.web.ServerLauncher'
-	standardInput = System.in
-	group = 'run'
-	description = 'Starts an example Jetty server with your language'
-}
+mainClassName = "ch.vorburger.xtend.web.ServerLauncher"
 
-jar.manifest {
-	name 'Xtend Web Integration'
-	vendor 'Eclipse Xtext'
+run {
+    if (project.hasProperty('appargs')) {
+        args(appargs.split(' '))
+    }
 }
-
