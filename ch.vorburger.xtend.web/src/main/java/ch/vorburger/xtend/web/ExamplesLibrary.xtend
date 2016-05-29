@@ -19,7 +19,7 @@ class ExamplesLibrary {
     }
 
     def static exampleProject() {
-        new Project(new File("../org.eclipse.xtend.web.examples"), "/src/main/java", "")
+        new Project(new File("../ch.vorburger.xtend.web.examples"), "/src/main/java", "")
     }
 
     def writeExamplesToFiles() {
