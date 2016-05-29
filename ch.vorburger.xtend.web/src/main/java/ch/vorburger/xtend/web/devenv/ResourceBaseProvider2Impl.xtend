@@ -1,31 +1,31 @@
 package ch.vorburger.xtend.web.devenv
 
-import java.io.File
-import java.io.IOException
+import com.google.inject.Inject
 import org.apache.commons.io.FileUtils
-import org.eclipse.xtext.web.server.persistence.ResourceBaseProviderImpl
+import org.eclipse.xtext.web.server.persistence.IResourceBaseProvider
+import org.eclipse.xtext.web.server.InvalidRequestException
+import org.eclipse.emf.common.util.URI
+import java.io.File
+import com.google.inject.Singleton
 
-class ResourceBaseProvider2Impl extends ResourceBaseProviderImpl implements IResourceBaseProvider2 {
+@Singleton
+class ResourceBaseProvider2Impl implements IResourceBaseProvider, IResourceBaseProvider2 {
 
-    protected val File resourceBase
+    @Inject ProjectProvider projectProvider
 
-    new(Project project) throws IOException {
-        this(project.limitedSourceDirectory)
-    }
-
-    new(File resourceBase) throws IOException {
-        super(resourceBase.toString)
-        this.resourceBase = resourceBase
-        if (!this.resourceBase.exists)
-            this.resourceBase.mkdirs
-        if (!this.resourceBase.isDirectory)
-            throw new IllegalArgumentException("Not a directory: " + this.resourceBase)
-    }
-
-    override getResourceIDs() {
+    override getResourceIDs(String baseResourcePath) {
+        val resourceBase = projectProvider.getProject(baseResourcePath).limitedSourceDirectory
         FileUtils.listFiles(resourceBase, Project.xtendExtensions, true).map [
             resourceBase.toPath.relativize(it.toPath).toString
         ]
+    }
+    
+    override getFileURI(String resourceId) {
+        if (resourceId.contains('..'))
+            throw new InvalidRequestException.InvalidParametersException('Invalid resource path: ' + resourceId)
+        val resourceBase = projectProvider.getProject(resourceId).limitedSourceDirectory
+        // TODO when resourceId includes user/project prefix, then it will have to be adjusted here
+        URI.createFileURI(new File(resourceBase, resourceId).toString())
     }
 
 }

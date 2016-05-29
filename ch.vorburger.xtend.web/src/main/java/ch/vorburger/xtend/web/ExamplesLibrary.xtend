@@ -1,35 +1,55 @@
 package ch.vorburger.xtend.web
 
 import ch.vorburger.xtend.web.devenv.Project
-import ch.vorburger.xtend.web.devenv.WebDevEnvModule
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import com.google.inject.Guice
 import com.google.inject.Inject
 import java.io.File
 import org.eclipse.xtext.web.server.persistence.IResourceBaseProvider
+import ch.vorburger.xtend.web.devenv.ProjectProvider
+import ch.vorburger.xtend.web.devenv.GradleWrapperUtil
 
-class ExamplesLibrary {
+class ExamplesLibrary implements ProjectProvider {
 
     @Inject IResourceBaseProvider resourceBaseProvider 
-    
-    def static void main(String[] args) {
-        val examplesLibrary = Guice.createInjector(new WebDevEnvModule(exampleProject())).getInstance(ExamplesLibrary)
-    	   examplesLibrary.writeExamplesToFiles()
+    @Inject GradleWrapperUtil gradleWrapperUtil 
+
+    override getProject(String resourceId) {
+        val file = new File("../ch.vorburger.xtend.web.examples")
+        val project = new Project(file, "/src/main/java", "") 
+        if (!file.exists) {
+            writeExamplesToFiles(project)
+        }
+        project
     }
 
-    def static exampleProject() {
-        new Project(new File("../ch.vorburger.xtend.web.examples"), "/src/main/java", "")
-    }
-
-    def writeExamplesToFiles() {
+    def writeExamplesToFiles(Project project) {
         for (example : examples.entrySet) {
             val fileURI = resourceBaseProvider.getFileURI(example.key)
             val file = new File(fileURI.toFileString)
             file.parentFile.mkdirs
             Files.write(example.value, file, Charsets.UTF_8)
         }
+        val buildGradleFile = new File(project.baseDir, "build.gradle")
+        Files.write(buildGradle, buildGradleFile, Charsets.UTF_8)
+        gradleWrapperUtil.installGradleWrapper(project.baseDir);
     }
+
+    val buildGradle = '''
+        plugins {
+          id 'eclipse'
+          id 'org.xtext.xtend' version '1.0.4'
+        }
+        
+        repositories.jcenter()
+        
+        dependencies {
+          compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.2'
+          compile 'junit:junit:4.12'
+        }
+        
+        compileJava.options.encoding = 'UTF-8'
+    '''
 
 	val examples = #{
 		'HelloWorld.xtend' -> '''
@@ -789,4 +809,5 @@ class ExamplesLibrary {
 //		}
 //		'''	
 	}
+
 }

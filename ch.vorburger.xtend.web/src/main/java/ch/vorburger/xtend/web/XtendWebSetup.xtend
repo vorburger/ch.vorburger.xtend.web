@@ -22,19 +22,13 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
  */
 @FinalFieldsConstructor class XtendWebSetup extends XtendStandaloneSetup {
 
-    val Provider<ExecutorService> executorServiceProvider;
+    val Provider<ExecutorService> executorServiceProvider
 
     override Injector createInjector() {
         val runtimeModule = new XtendRuntimeModule()
         val webModule = new XtendWebModule(executorServiceProvider)
-        val webDevEnvModule = webDevEnvModule()
+        val webDevEnvModule = new WebDevEnvModule()
         return Guice.createInjector(Modules.combine(Modules.override(runtimeModule).with(webModule)), webDevEnvModule)
-    }
-
-    def protected webDevEnvModule() {
-        // val p = new Project(new File("/home/vorburger/dev/Minecraft/SwissKnightMinecraft/SpongePowered/MyFirstSpongePlugIn"), "src/main/java", "ch/vorburger/minecraft/michaelpapa7")
-        val p = ExamplesLibrary.exampleProject
-        new WebDevEnvModule(p)
     }
 
 }

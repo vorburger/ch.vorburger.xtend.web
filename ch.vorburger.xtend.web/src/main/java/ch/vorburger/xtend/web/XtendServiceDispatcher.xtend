@@ -71,7 +71,7 @@ class XtendServiceDispatcher extends XtextServiceDispatcher {
         new ServiceDescriptor => [
             service = [
                 try {
-                    return new ListResourcesResult(Lists.newArrayList(resourceBaseProvider2.resourceIDs))
+                    return new ListResourcesResult(Lists.newArrayList(resourceBaseProvider2.getResourceIDs(null /* TODO */)))
                 } catch (Throwable throwable) {
                     handleError(throwable)
                 }

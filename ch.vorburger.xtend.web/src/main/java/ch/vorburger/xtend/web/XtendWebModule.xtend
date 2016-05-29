@@ -29,6 +29,9 @@ import org.eclipse.xtext.web.server.persistence.FileResourceHandler
 import org.eclipse.xtext.web.server.persistence.IServerResourceHandler
 import org.eclipse.xtext.web.server.persistence.ResourcePersistenceService
 import ch.vorburger.xtend.web.devenv.AutoRefreshingResourcePersistenceService
+import ch.vorburger.xtend.web.devenv.IResourceBaseProvider2
+import ch.vorburger.xtend.web.devenv.ResourceBaseProvider2Impl
+import org.eclipse.xtext.web.server.persistence.IResourceBaseProvider
 
 /**
  * Use this class to register additional components to be used within the web application.
@@ -76,5 +79,11 @@ import ch.vorburger.xtend.web.devenv.AutoRefreshingResourcePersistenceService
         return AutoRefreshingResourcePersistenceService
     }
 
+    def Class<? extends IResourceBaseProvider> bindIResourceBaseProvider() {
+        ResourceBaseProvider2Impl
+    }
+    def Class<? extends IResourceBaseProvider2> bindIResourceBaseProvider2() {
+        ResourceBaseProvider2Impl
+    }
 
 }

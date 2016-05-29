@@ -28,6 +28,8 @@ dependencies {
 	// This dependency (HoTea) is *ONLY* used here for & to avoid copy/pasting it's EclipseClasspathFileReader util class (NOT actually HoTea.. yet?)
 	// compile 'ch.vorburger:hotea:1.0.0-SNAPSHOT'
 	compile 'com.github.vorburger.HoTea:hotea:-SNAPSHOT' // jitpack
+	
+	compile files('../gradle/wrapper/gradle-wrapper.jar')
 }
 
 compileJava.options.encoding = 'UTF-8'

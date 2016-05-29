@@ -1,7 +1,9 @@
 package ch.vorburger.xtend.web.devenv
 
-interface IResourceBaseProvider2 {
+import org.eclipse.xtext.web.server.persistence.IResourceBaseProvider
 
-    def Iterable<String> getResourceIDs()
+interface IResourceBaseProvider2 extends IResourceBaseProvider {
+
+    def Iterable<String> getResourceIDs(String baseResourcePath)
 
 }

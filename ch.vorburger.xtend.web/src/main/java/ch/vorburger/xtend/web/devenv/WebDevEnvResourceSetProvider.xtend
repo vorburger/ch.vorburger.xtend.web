@@ -12,35 +12,34 @@ import java.util.List
 import org.apache.commons.io.FileUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.web.server.IServiceContext
 import org.eclipse.xtext.web.server.model.IWebResourceSetProvider
 
-@FinalFieldsConstructor
 class WebDevEnvResourceSetProvider implements IWebResourceSetProvider {
 
     // NOTE Xtext already seems to cache, as we can see that IWebResourceSetProvider.get is called only once, and not for each request.
     // So a Cache in the HTTP session (via serviceContext.session) does not appear to be needed.  If it was, see commented out code. 
     // val static SESSION_CACHE_KEY = WebDevEnvResourceSetProvider.name  
-    val Project project
 
-    @Inject Provider<ResourceSet> newResourceSetProvider;
-    var ResourceSet resourceSet; // TODO later expiring Cache Map with several RS, to provide multi project support
+    @Inject ProjectProvider projectProvider    
+    @Inject Provider<ResourceSet> newResourceSetProvider
+    var ResourceSet resourceSet // TODO later expiring Cache Map with several RS, to provide multi project support
 
     override get(String resourceId, IServiceContext serviceContext) {
         if (resourceSet == null) {
 //            serviceContext.session.get(SESSION_CACHE_KEY, [
             resourceSet = newResourceSetProvider.get
             val theXtextResourceSet = resourceSet as XtextResourceSet
-            theXtextResourceSet.classpathURIContext = projectClassLoader
+            val project = projectProvider.getProject(resourceId)
+            theXtextResourceSet.classpathURIContext = getProjectClassLoader(project)
             loadAllXtendFiles(project, resourceSet)
 //            theResourceSet
 //            ])
         }
         resourceSet
     }
-
+    
     protected def loadAllXtendFiles(Project project, ResourceSet resourceSet) {
         val xtendFiles = FileUtils.listFiles(project.sourceDirectory, Project.xtendExtensions, true)
         for (xtendFile : xtendFiles) {
@@ -49,7 +48,7 @@ class WebDevEnvResourceSetProvider implements IWebResourceSetProvider {
         }
     }
 
-    protected def URLClassLoader getProjectClassLoader() {
+    protected def URLClassLoader getProjectClassLoader(Project project) {
         val dotClasspathFile = new File(project.baseDir, ".classpath").toPath
         val paths = new EclipseClasspathFileReader(dotClasspathFile).paths
         val URL[] urls = getURLs(paths)
