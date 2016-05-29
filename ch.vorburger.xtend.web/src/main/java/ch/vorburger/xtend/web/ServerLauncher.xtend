@@ -46,18 +46,11 @@ class ServerLauncher {
     def Optional<Server> launch(String ip, int port) {
         val server = new Server(new InetSocketAddress(ip, port))
         val webAppContext = new WebAppContext => [
-            resourceBase = 'src/main/webapp'
+            resourceBase = ServerLauncher.getResource("/META-INF/resources").toURI().toString()
             welcomeFiles = #["index.html"]
             contextPath = "/"
-//			configurations = #[
-//				new AnnotationConfiguration,
-//				new WebXmlConfiguration,
-//				new WebInfConfiguration,
-//				new MetaInfConfiguration
-//			]
             addServlet(XtendServlet, XtendServlet.URL_PATTERNS)
-            setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, // '.*/org\\.eclipse\\.xtend\\.web/.*,' + 
-            '.*/org\\.eclipse\\.xtext\\.web.*,.*/org\\.webjars.*')
+            setAttribute(WebInfConfiguration.CONTAINER_JAR_PATTERN, ".*\\.jar$")
             
             // this is great: if WAR couldn't start, don't swallow cause, but propagate!
             servletHandler.startWithUnavailable = false
