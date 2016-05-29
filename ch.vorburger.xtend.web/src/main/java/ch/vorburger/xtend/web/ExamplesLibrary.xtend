@@ -5,13 +5,11 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import com.google.inject.Inject
 import java.io.File
-import org.eclipse.xtext.web.server.persistence.IResourceBaseProvider
 import ch.vorburger.xtend.web.devenv.ProjectProvider
 import ch.vorburger.xtend.web.devenv.GradleWrapperUtil
 
 class ExamplesLibrary implements ProjectProvider {
 
-    @Inject IResourceBaseProvider resourceBaseProvider 
     @Inject GradleWrapperUtil gradleWrapperUtil 
 
     override getProject(String resourceId) {
@@ -25,14 +23,14 @@ class ExamplesLibrary implements ProjectProvider {
 
     def writeExamplesToFiles(Project project) {
         for (example : examples.entrySet) {
-            val fileURI = resourceBaseProvider.getFileURI(example.key)
-            val file = new File(fileURI.toFileString)
+            val file = new File(project.sourceDirectory, example.key)
             file.parentFile.mkdirs
             Files.write(example.value, file, Charsets.UTF_8)
         }
         val buildGradleFile = new File(project.baseDir, "build.gradle")
         Files.write(buildGradle, buildGradleFile, Charsets.UTF_8)
         gradleWrapperUtil.installGradleWrapper(project.baseDir);
+        // TODO and now we just need to RUN "gradlew eclipse" ... ;-) using ch.vorburger.exec!
     }
 
     val buildGradle = '''
