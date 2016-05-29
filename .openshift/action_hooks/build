@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e # exit on error
+set -x # echo on
+
+# Using "source" instead of e.g. relying on "pre_start" makes env. vars def. in source'd script pass through; e.g. for Gradle wrapper
+source `dirname "$0"`/common
+
+cd $OPENSHIFT_REPO_DIR/ch.vorburger.xtend.web
+../gradlew installDist

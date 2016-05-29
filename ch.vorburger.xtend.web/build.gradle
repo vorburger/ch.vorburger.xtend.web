@@ -32,6 +32,7 @@ dependencies {
 mainClassName = "ch.vorburger.xtend.web.ServerLauncher"
 
 run {
+    // ../gradlew run -Pappargs="localhost 9090" 
     if (project.hasProperty('appargs')) {
         args(appargs.split(' '))
     }

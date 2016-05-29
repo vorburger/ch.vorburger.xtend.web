@@ -1,11 +1,10 @@
 
 - [ ] HOST it somewhere!
-        gradle OK?
-        working? :(
-        logging
-        fat jar
         sep. build/deploy/start, so that failing builds don't destroy what's running.
             nohup java, not gradle
+            fat jar? 
+        working??
+        logging
         publish new gradle application template
 
 - [ ] src/main/webapp/index.html gen. from src/main/java/**/*.xtend (statically, build; not run-time, for CDN..)

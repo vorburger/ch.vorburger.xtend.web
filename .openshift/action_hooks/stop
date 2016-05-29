@@ -2,9 +2,14 @@
 set -e # exit on error
 set -x # echo on
 
-# https://nwillc.wordpress.com/2015/06/30/openshift-jdk-8-gradle-2-3-working-together/
-source $OPENSHIFT_CARTRIDGE_SDK_BASH
-if [[ -n `ps -A | grep java` ]]; then
-    pkill -SIGTERM java
+if [ -f $OPENSHIFT_REPO_DIR/RUNNING_PID ]; then
+    kill `cat $OPENSHIFT_REPO_DIR/RUNNING_PID`
+    rm $OPENSHIFT_REPO_DIR/RUNNING_PID
 fi
-exit 0
+
+## https://nwillc.wordpress.com/2015/06/30/openshift-jdk-8-gradle-2-3-working-together/
+#source $OPENSHIFT_CARTRIDGE_SDK_BASH
+#if [[ -n `ps -A | grep java` ]]; then
+#    pkill -SIGTERM java
+#fi
+#exit 0
