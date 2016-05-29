@@ -27,6 +27,8 @@ import org.eclipse.xtext.web.server.XtextServiceDispatcher
 import org.eclipse.xtext.web.server.occurrences.OccurrencesService
 import org.eclipse.xtext.web.server.persistence.FileResourceHandler
 import org.eclipse.xtext.web.server.persistence.IServerResourceHandler
+import org.eclipse.xtext.web.server.persistence.ResourcePersistenceService
+import ch.vorburger.xtend.web.devenv.AutoRefreshingResourcePersistenceService
 
 /**
  * Use this class to register additional components to be used within the web application.
@@ -69,5 +71,10 @@ import org.eclipse.xtext.web.server.persistence.IServerResourceHandler
     override Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
         return XtendHighlightingCalculator
     }
+
+    def Class<? extends ResourcePersistenceService> bindResourcePersistenceService() {
+        return AutoRefreshingResourcePersistenceService
+    }
+
 
 }
