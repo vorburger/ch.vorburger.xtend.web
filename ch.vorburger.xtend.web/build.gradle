@@ -29,6 +29,9 @@ dependencies {
 	// compile 'ch.vorburger:hotea:1.0.0-SNAPSHOT'
 	compile 'com.github.vorburger.HoTea:hotea:-SNAPSHOT' // jitpack
 	
+    // This dependency (MariaDB4j) is for ch.vorburger.exec (TODO split that out into separate project; no need for DB here, obviously) 
+	compile 'com.github.vorburger.MariaDB4j:mariaDB4j-core:-SNAPSHOT' // jitpack
+	
 	compile files('../gradle/wrapper/gradle-wrapper.jar')
 }
 

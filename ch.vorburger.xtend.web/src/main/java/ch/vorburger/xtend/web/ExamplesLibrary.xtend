@@ -1,19 +1,22 @@
 package ch.vorburger.xtend.web
 
+import ch.vorburger.xtend.web.devenv.GradleRunner
+import ch.vorburger.xtend.web.devenv.GradleWrapperWriter
 import ch.vorburger.xtend.web.devenv.Project
+import ch.vorburger.xtend.web.devenv.ProjectProvider
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import java.io.File
-import ch.vorburger.xtend.web.devenv.ProjectProvider
-import ch.vorburger.xtend.web.devenv.GradleWrapperUtil
 
+@Singleton
 class ExamplesLibrary implements ProjectProvider {
 
-    @Inject GradleWrapperUtil gradleWrapperUtil 
+    @Inject GradleWrapperWriter gradleWrapperWriter 
 
-    override getProject(String resourceId) {
-        val file = new File("../ch.vorburger.xtend.web.examples")
+    override synchronized getProject(String resourceId) {
+        val file = new File("/tmp/ch.vorburger.xtend.web.examples")
         val project = new Project(file, "/src/main/java", "") 
         if (!file.exists) {
             writeExamplesToFiles(project)
@@ -21,7 +24,7 @@ class ExamplesLibrary implements ProjectProvider {
         project
     }
 
-    def writeExamplesToFiles(Project project) {
+    def protected writeExamplesToFiles(Project project) {
         for (example : examples.entrySet) {
             val file = new File(project.sourceDirectory, example.key)
             file.parentFile.mkdirs
@@ -29,8 +32,8 @@ class ExamplesLibrary implements ProjectProvider {
         }
         val buildGradleFile = new File(project.baseDir, "build.gradle")
         Files.write(buildGradle, buildGradleFile, Charsets.UTF_8)
-        gradleWrapperUtil.installGradleWrapper(project.baseDir);
-        // TODO and now we just need to RUN "gradlew eclipse" ... ;-) using ch.vorburger.exec!
+        gradleWrapperWriter.installGradleWrapper(project.baseDir);
+        new GradleRunner().runGradle(project.baseDir, "eclipse")
     }
 
     val buildGradle = '''

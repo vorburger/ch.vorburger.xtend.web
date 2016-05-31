@@ -4,7 +4,7 @@ import java.io.File
 import com.google.common.io.Files
 import com.google.common.base.Charsets
 
-class GradleWrapperUtil {
+class GradleWrapperWriter {
     
     def installGradleWrapper(File dir) {
         val wrapperDir = new File(dir, "gradle/wrapper")
@@ -16,7 +16,7 @@ class GradleWrapperUtil {
         gradlewFile.executable = true
     }
     
-    def extractWrapperJAR(File file) {
+    def protected extractWrapperJAR(File file) {
         val url = getClass().getResource("/org/gradle/wrapper/GradleWrapperMain.class")
         if (url == null)
             throw new IllegalStateException("gradle-wrapper.jar not found on classpath")
@@ -29,7 +29,7 @@ class GradleWrapperUtil {
         Files.copy(wrapperJarFile, file)
     }
     
-    def gradleWrapperProperties() '''
+    def protected gradleWrapperProperties() '''
         distributionBase=GRADLE_USER_HOME
         distributionPath=wrapper/dists
         zipStoreBase=GRADLE_USER_HOME
