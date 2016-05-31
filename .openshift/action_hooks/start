@@ -6,6 +6,6 @@ set -x # echo on
 source `dirname "$0"`/common
 
 # Application must bind to $OPENSHIFT_DIY_IP:$OPENSHIFT_DIY_PORT, and log into OPENSHIFT_DIY_LOG_DIR instead of STDOUT
-nohup $OPENSHIFT_REPO_DIR/ch.vorburger.xtend.web/build/install/ch.vorburger.xtend.web/bin/ch.vorburger.xtend.web $OPENSHIFT_DIY_IP $OPENSHIFT_DIY_PORT 2>&1 &
+nohup $OPENSHIFT_REPO_DIR/ch.vorburger.xtend.web/build/install/ch.vorburger.xtend.web/bin/ch.vorburger.xtend.web $OPENSHIFT_DIY_IP $OPENSHIFT_DIY_PORT > ${OPENSHIFT_DIY_LOG_DIR}/console.log  2>&1 &
 
 echo $! > $OPENSHIFT_REPO_DIR/RUNNING_PID
