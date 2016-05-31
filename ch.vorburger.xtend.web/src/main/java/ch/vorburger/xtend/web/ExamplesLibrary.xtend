@@ -9,17 +9,23 @@ import com.google.common.io.Files
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import java.io.File
+import org.slf4j.LoggerFactory
 
 @Singleton
 class ExamplesLibrary implements ProjectProvider {
+    
+    val static logger = LoggerFactory.getLogger(ExamplesLibrary)
 
     @Inject GradleWrapperWriter gradleWrapperWriter 
 
     override synchronized getProject(String resourceId) {
-        val file = java.nio.file.Files.createTempDirectory("ch.vorburger.xtend.web.examples").toFile
-        val project = new Project(file, "/src/main/java", "") 
-        if (!file.exists) {
+        val dir = java.nio.file.Files.createTempDirectory("ch.vorburger.xtend.web.examples").toFile
+        val project = new Project(dir, "/src/main/java", "") 
+        if (!dir.exists) {
+            logger.info("writeExamplesToFiles: {}", project)
             writeExamplesToFiles(project)
+        } else {
+            logger.info("getProject {}; dir exists: {}", project, dir)
         }
         project
     }
