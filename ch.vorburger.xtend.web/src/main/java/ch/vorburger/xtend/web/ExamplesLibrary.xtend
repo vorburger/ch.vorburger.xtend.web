@@ -16,7 +16,7 @@ class ExamplesLibrary implements ProjectProvider {
     @Inject GradleWrapperWriter gradleWrapperWriter 
 
     override synchronized getProject(String resourceId) {
-        val file = new File("/tmp/ch.vorburger.xtend.web.examples")
+        val file = java.nio.file.Files.createTempDirectory("ch.vorburger.xtend.web.examples").toFile
         val project = new Project(file, "/src/main/java", "") 
         if (!file.exists) {
             writeExamplesToFiles(project)
