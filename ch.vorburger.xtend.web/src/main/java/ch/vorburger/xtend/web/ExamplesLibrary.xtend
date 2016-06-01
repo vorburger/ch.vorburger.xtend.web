@@ -18,15 +18,20 @@ class ExamplesLibrary implements ProjectProvider {
 
     @Inject GradleWrapperWriter gradleWrapperWriter 
 
+    var Project singletonProject
+
+    // synchronized important to guarantee @Singleton Project 
     override synchronized getProject(String resourceId) {
+        if (singletonProject == null)
+            singletonProject = newTempProject()
+        singletonProject
+    }
+
+    def protected newTempProject() {
         val dir = java.nio.file.Files.createTempDirectory("ch.vorburger.xtend.web.examples").toFile
         val project = new Project(dir, "/src/main/java", "") 
-        if (!dir.exists) {
-            logger.info("writeExamplesToFiles: {}", project)
-            writeExamplesToFiles(project)
-        } else {
-            logger.info("getProject {}; dir exists: {}", project, dir)
-        }
+        logger.info("writeExamplesToFiles: {}", project)
+        writeExamplesToFiles(project)
         project
     }
 
@@ -39,7 +44,7 @@ class ExamplesLibrary implements ProjectProvider {
         val buildGradleFile = new File(project.baseDir, "build.gradle")
         Files.write(buildGradle, buildGradleFile, Charsets.UTF_8)
         gradleWrapperWriter.installGradleWrapper(project.baseDir);
-        new GradleRunner().runGradle(project.baseDir, "eclipse")
+        new GradleRunner().runGradle(project.baseDir, "--no-daemon", "eclipse")
     }
 
     val buildGradle = '''

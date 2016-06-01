@@ -5,16 +5,17 @@ import ch.vorburger.exec.ManagedProcessBuilder
 
 class GradleRunner {
 
-    def boolean runGradle(File directory, String tasks) {
+    def boolean runGradle(File directory, String... arguments) {
         val gradlew = new File(directory, "gradlew")
         if (!gradlew.exists)
             throw new IllegalStateException("No Gradle Wrapper (gradlew) in directory: " + directory)
         val managedProcess = (new ManagedProcessBuilder(gradlew) => [
-            workingDirectory = directory            
-            addArgument(tasks)
+            workingDirectory = directory
+            for (arg : arguments)
+            addArgument(arg)
         ]).build()
         managedProcess.start
-        managedProcess.waitForExitMaxMsOrDestroy(5000)
+        managedProcess.waitForExitMaxMsOrDestroy(30000) // 30s seems long, but 5-10s are often required
         return managedProcess.exitValue == 0
     }
 
