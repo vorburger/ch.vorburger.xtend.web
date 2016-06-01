@@ -15,7 +15,7 @@ class GradleRunner {
             addArgument(arg)
         ]).build()
         managedProcess.start
-        managedProcess.waitForExitMaxMsOrDestroy(30000) // 30s seems long, but 5-10s are often required
+        managedProcess.waitForExitMaxMsOrDestroy(120000) // 2' seems very long, but 5-10s are often required locally, and more than 30s on first install (with Downloads) on OpenShift
         return managedProcess.exitValue == 0
     }
 
